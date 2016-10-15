@@ -5,7 +5,9 @@ module.exports = function(scripts, options) {
 
 
   var angular = require("./src/fake-angular")(options),
-  document = {}, window = {}, navigator = {};
+    document = {},
+    window = {},
+    navigator = {};
 
   var results = scripts.map(function(content) {
 

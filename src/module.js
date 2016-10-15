@@ -15,6 +15,7 @@ function Module(name, deps, options) {
   this.filters = [];
   this.providers = [];
   this.directives = [];
+  this.components = [];
 
   this.options = options;
 
@@ -37,7 +38,7 @@ api.methods.forEach(function(method) {
   };
 });
 
-["controller", "factory", "service", "filter", "provider", "directive"].forEach(function (method) {
+["controller", "factory", "service", "filter", "provider", "directive", "component"].forEach(function (method) {
   Module.prototype[ method ] = function (name, deps) {
     if (!name) {
       return this;

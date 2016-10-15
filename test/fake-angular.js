@@ -37,6 +37,7 @@ describe("angular", function() {
       var methods = ["constant",
         "controller",
         "directive",
+        "component",
         "factory",
         "filter",
         "provider",
