@@ -2,6 +2,10 @@
 logs
 *.log
 
+senses*
+
+.idea
+
 # Runtime data
 pids
 *.pid
