@@ -3,7 +3,7 @@
 var _ = require("lodash");
 
 var utils = require("./utils");
-var api = require("./api");
+var angularApi = require("./angular-api");
 var Module = require("./module");
 
 module.exports = function(options) {
@@ -17,19 +17,21 @@ module.exports = function(options) {
         modulesMap: {},
         modulesNames: [],
         options: options,
-        module: function(name, deps) {
+
+        module: function(name, dependencies) {
             var module;
 
             // Module was inserted before
             if (this.modulesNames.indexOf(name) !== -1) {
                 module = this.modulesMap[name];
-                if (deps) {
-                    this.modulesMap[name].modules = deps;
+
+                if (dependencies) {
+                    this.modulesMap[name].modules = dependencies;
                 }
 
             // First time we see this module
             } else {
-                module = new Module(name, deps, options);
+                module = new Module(name, dependencies, options);
                 this.modulesNames.push(name);
                 this.modulesMap[name] = module;
                 this.modules.push(module);
@@ -40,7 +42,7 @@ module.exports = function(options) {
     };
 
     // Adds global apis to the angular object
-    api.globalApis.forEach(function(method) {
+    angularApi.globalApis.forEach(function(method) {
         angular[method] = utils.noop;
     });
 

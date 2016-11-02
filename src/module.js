@@ -4,12 +4,14 @@ var _ = require("lodash");
 
 var pluralize = require("pluralize");
 var utils = require("./utils");
-var api = require("./api");
+var angularApi = require("./angular-api");
 
-function Module(name, deps, options) {
-    console.log("Module", name, deps, options);
+function Module(name, dependencies, options) {
+    console.log("Module", name, dependencies, options);
+
     this.name = name;
-    this.items = [];
+    this.items = []; // ??
+
     this.controllers = [];
     this.services = [];
     this.factories = [];
@@ -22,26 +24,35 @@ function Module(name, deps, options) {
 
     // filter out angular dependencies
     if (this.options.hideAngularServices) {
-        deps = _.filter(deps, function(dep) {
-            return !_.contains(api.angularServices, dep);
+        dependencies = _.filter(dependencies, function(dependency) {
+            return !_.contains(angularApi.angularServices, dependency);
         });
     }
 
-    this.modules = deps;
+    this.modules = dependencies;
 }
 
-// Adds module methods
-api.methods.forEach(function(method) {
-    Module.prototype[method] = function addItem(name) {
-        if (!name) {
-            return this;
-        }
-        this.items.push(name);
-        return this;
-    };
-});
+// Adds module methods, but is redundant ???
+// angularApi.methods.forEach(function(method) {
+//     Module.prototype[method] = function addItem(name) {
+//         if (!name) {
+//             return this;
+//         }
+//         this.items.push(name);
+//         return this;
+//     };
+// });
 
-["controller", "factory", "service", "filter", "provider", "directive", "component"].forEach(function(method) {
+
+[
+    "controller",
+    "factory",
+    "service",
+    "filter",
+    "provider",
+    "directive",
+    "component"
+].forEach(function(method) {
     Module.prototype[method] = function(name, deps) {
         if (!name) {
             return this;
@@ -56,7 +67,7 @@ api.methods.forEach(function(method) {
         // Exclude angular services from dependencies
         if (this.options.hideAngularServices) {
             deps = _.filter(deps, function(dep) {
-                return !_.contains(api.angularServices, dep);
+                return !_.contains(angularApi.angularServices, dep);
             });
         }
 
@@ -76,6 +87,16 @@ Module.prototype.run = function() {
 };
 
 Module.prototype.config = function() {
+    return this;
+};
+
+// new
+Module.prototype.value = function() {
+    return this;
+};
+
+// new
+Module.prototype.constant = function() {
     return this;
 };
 

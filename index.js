@@ -1,34 +1,37 @@
 /*eslint no-unused-expressions: 0, no-unused-vars: 0, no-eval: 0*/
 "use strict";
 
+// angular-architecture-graph
 module.exports = function(scripts, options) {
 
+    var angular = require("./src/fake-angular")(options),
+        document = {},
+        window = {},
+        navigator = {};
 
-  var angular = require("./src/fake-angular")(options),
-    document = {},
-    window = {},
-    navigator = {};
+    var results = scripts.map(function(content) {
 
-  var results = scripts.map(function(content) {
+        console.log(content);
 
-    try {
-      eval(content.text);
-    } catch (e) {
-      return {
-        id: content.id,
-        error: true,
-        exception: e
-      };
-    }
+        try {
+            eval(content.text);
+
+        } catch (e) {
+            return {
+                id: content.id,
+                error: true,
+                exception: e
+            };
+        }
+
+        return {
+            id: content.id,
+            error: false
+        };
+    });
 
     return {
-      id: content.id,
-      error: false
+        angular: angular,
+        results: results
     };
-  });
-
-  return {
-    angular: angular,
-    results: results
-  };
 };
