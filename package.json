@@ -39,7 +39,6 @@
     "should": "^3.2.0"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
-    "pluralize": "^1.0.2"
+    "lodash": "^2.4.1"
   }
 }

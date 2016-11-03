@@ -6,6 +6,18 @@ var pluralize = require("pluralize");
 var utils = require("./utils");
 var angularApi = require("./angular-api");
 
+var pluralize = {
+    "controller": "controllers",
+    "factory": "factories",
+    "service": "services",
+    "filter": "filters",
+    "provider": "providers",
+    "directive": "directives",
+    "component": "components",
+    "run": "runs",
+    "config": "configs"
+}
+
 function Module(name, dependencies, options) {
 
     this.name = name;
@@ -65,7 +77,7 @@ function Module(name, dependencies, options) {
                 });
             }
 
-            that[pluralize(method)].push({
+            that[pluralize[method]].push({
                 "name": name,
                 "deps": deps
             });
