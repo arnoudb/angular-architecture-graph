@@ -9,12 +9,11 @@ module.exports = function(scripts, options) {
         window = {},
         navigator = {};
 
-    var results = scripts.map(function(content) {
-
-        console.log(content);
+    var results = scripts.map(function(content, i) {
 
         try {
-            eval(content.text);
+            // this is where the magic happens
+           eval(content.text);
 
         } catch (e) {
             return {
@@ -29,6 +28,10 @@ module.exports = function(scripts, options) {
             error: false
         };
     });
+
+    setTimeout(function(ng) {
+        console.log(ng)
+    }, 10, angular);
 
     return {
         angular: angular,

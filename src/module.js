@@ -7,7 +7,8 @@ var utils = require("./utils");
 var angularApi = require("./angular-api");
 
 function Module(name, dependencies, options) {
-    console.log("Module", name, dependencies, options);
+
+    //console.log("MMModule", name, dependencies, options);
 
     this.name = name;
     this.items = []; // ??
@@ -54,6 +55,8 @@ function Module(name, dependencies, options) {
     "component"
 ].forEach(function(method) {
     Module.prototype[method] = function(name, deps) {
+        var that = this;
+
         if (!name) {
             return this;
         }
@@ -62,23 +65,25 @@ function Module(name, dependencies, options) {
             deps = deps.controller;
         }
 
-        deps = utils.parseAngularDeps(deps).deps;
+        setTimeout(function() {
+            deps = utils.parseAngularDeps(deps).deps;
 
-        // Exclude angular services from dependencies
-        if (this.options.hideAngularServices) {
-            deps = _.filter(deps, function(dep) {
-                return !_.contains(angularApi.angularServices, dep);
+            // Exclude angular services from dependencies
+            if (that.options.hideAngularServices) {
+                deps = _.filter(deps, function(dep) {
+                    return !_.contains(angularApi.angularServices, dep);
+                });
+            }
+
+            that[pluralize(method)].push({
+                "name": name,
+                "deps": deps
             });
-        }
 
-        this[pluralize(method)].push({
-            "name": name,
-            "deps": deps
+            that.items.push(name);
         });
 
-        this.items.push(name);
-
-        return this;
+        return that;
     };
 });
 

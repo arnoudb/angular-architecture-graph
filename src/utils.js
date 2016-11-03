@@ -11,18 +11,25 @@ function parseAngularDeps(angularDeps) {
         deps = angularDeps;
 
     } else if (angularDeps instanceof Function) {
+
+        console.log('angularDeps.$inject: ' + angularDeps.$inject + ' ' + angularDeps.name);
+
         definition = angularDeps;
 
-        // We just care about the wrapper function to the dependencies
-        angularDepsStr = "" + angularDeps;
-        angularDepsStr = angularDepsStr.slice(0, angularDepsStr.indexOf("{"));
-        deps = /\(([^)]+)/.exec(angularDepsStr);
-
-        if (deps && deps.length && deps[1]) {
-            deps = deps[1].split(/\s*,\s*/);
-
+        if (definition.$inject) {
+            deps = definition.$inject;
         } else {
-            deps = [];
+            // We just care about the wrapper function to the dependencies
+            angularDepsStr = "" + angularDeps;
+            angularDepsStr = angularDepsStr.slice(0, angularDepsStr.indexOf("{"));
+            deps = /\(([^)]+)/.exec(angularDepsStr);
+
+            if (deps && deps.length && deps[1]) {
+                deps = deps[1].split(/\s*,\s*/);
+
+            } else {
+                deps = [];
+            }
         }
     }
 
