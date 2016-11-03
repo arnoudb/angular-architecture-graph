@@ -18,6 +18,8 @@ function Module(name, dependencies, options) {
     this.providers = [];
     this.directives = [];
     this.components = [];
+    this.config = [];
+    this.run = [];
 
     this.options = options;
 
@@ -30,18 +32,6 @@ function Module(name, dependencies, options) {
 
     this.modules = dependencies;
 }
-
-// Adds module methods, but is redundant ???
-// angularApi.methods.forEach(function(method) {
-//     Module.prototype[method] = function addItem(name) {
-//         if (!name) {
-//             return this;
-//         }
-//         this.items.push(name);
-//         return this;
-//     };
-// });
-
 
 [
     "controller",
