@@ -8,8 +8,6 @@ var angularApi = require("./angular-api");
 
 function Module(name, dependencies, options) {
 
-    //console.log("MMModule", name, dependencies, options);
-
     this.name = name;
     this.items = []; // ??
 
@@ -52,7 +50,9 @@ function Module(name, dependencies, options) {
     "filter",
     "provider",
     "directive",
-    "component"
+    "component",
+    "run",
+    "config"
 ].forEach(function(method) {
     Module.prototype[method] = function(name, deps) {
         var that = this;
@@ -87,13 +87,13 @@ function Module(name, dependencies, options) {
     };
 });
 
-Module.prototype.run = function() {
-    return this;
-};
-
-Module.prototype.config = function() {
-    return this;
-};
+// Module.prototype.run = function() {
+//     return this;
+// };
+//
+// Module.prototype.config = function() {
+//     return this;
+// };
 
 // new
 Module.prototype.value = function() {

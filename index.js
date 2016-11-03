@@ -5,6 +5,7 @@
 module.exports = function(scripts, options) {
 
     var angular = require("./src/fake-angular")(options),
+        // shadow the globals
         document = {},
         window = {},
         navigator = {};
@@ -28,10 +29,6 @@ module.exports = function(scripts, options) {
             error: false
         };
     });
-
-    setTimeout(function(ng) {
-        console.log(ng)
-    }, 10, angular);
 
     return {
         angular: angular,
