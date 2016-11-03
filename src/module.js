@@ -18,8 +18,8 @@ function Module(name, dependencies, options) {
     this.providers = [];
     this.directives = [];
     this.components = [];
-    this.config = [];
-    this.run = [];
+    this.configs = [];
+    this.runs = [];
 
     this.options = options;
 
