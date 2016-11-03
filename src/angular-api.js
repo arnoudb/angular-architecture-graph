@@ -80,6 +80,7 @@ module.exports = {
         "$timeout",
         "$touch",
         "$window",
+        "$windowProvider",
         "$xhrFactory",
         "ng"
     ]
