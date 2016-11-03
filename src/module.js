@@ -41,8 +41,8 @@ function Module(name, dependencies, options) {
     "provider",
     "directive",
     "component",
-   // "run",
-   // "config"
+    "run",
+    "config"
 ].forEach(function(method) {
     Module.prototype[method] = function(name, deps) {
         var that = this;
