@@ -1,8 +1,6 @@
 "use strict";
 
 var _ = require("lodash");
-
-var pluralize = require("pluralize");
 var utils = require("./utils");
 var angularApi = require("./angular-api");
 
@@ -14,8 +12,8 @@ var pluralize = {
     "provider": "providers",
     "directive": "directives",
     "component": "components",
-    // "run": "runs",
-    // "config": "configs"
+    "run": "runs",
+    "config": "configs"
 }
 
 function Module(name, dependencies, options) {
@@ -30,8 +28,8 @@ function Module(name, dependencies, options) {
     this.providers = [];
     this.directives = [];
     this.components = [];
-    // this.configs = [];
-    // this.runs = [];
+    this.configs = [];
+    this.runs = [];
 
     this.options = options;
 
@@ -53,14 +51,18 @@ function Module(name, dependencies, options) {
     "provider",
     "directive",
     "component",
-    // "run",
-    // "config"
+    "run",
+    "config"
 ].forEach(function(method) {
     Module.prototype[method] = function(name, deps) {
         var that = this;
 
         if (!name) {
             return this;
+
+        } else if (typeof name === "function") {
+            deps = name;
+            name = name.name;
         }
 
         if (method === "component" && deps.controller && typeof deps.controller === "function") {
@@ -89,13 +91,13 @@ function Module(name, dependencies, options) {
     };
 });
 
-Module.prototype.run = function() {
-    return this;
-};
-
-Module.prototype.config = function() {
-    return this;
-};
+// Module.prototype.run = function() {
+//     return this;
+// };
+//
+// Module.prototype.config = function() {
+//     return this;
+// };
 
 // new
 Module.prototype.value = function() {
